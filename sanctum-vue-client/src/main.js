@@ -11,8 +11,7 @@ axios.defaults.withXSRFToken = true;
 const app = createApp(App);
 const { attempt } = useAuth();
 
-app.use(router);
-
 attempt().then(() => {
+  app.use(router);
   app.mount('#app');
 });
