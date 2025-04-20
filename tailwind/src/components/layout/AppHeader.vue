@@ -41,7 +41,7 @@
           <ThemeToggler />
           <NotificationMenu />
         </div>
-        <UserMenu v-bind:role="'Pentadbir'" />
+        <UserMenu v-bind:role="'Peserta'" />
       </div>
     </div>
   </header>

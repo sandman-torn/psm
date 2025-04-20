@@ -219,10 +219,10 @@
 </template>
 
 <script setup>
-import AdminLayout from '@/components/layout/AdminLayout.vue'
+import AdminLayout from '@/components/layout/AdminLayoutPenganjur.vue'
 import PageBreadcrumb from '@/components/common/PageBreadcrumb.vue'
 
-const currentPageTitle = ref('Calendar')
+const currentPageTitle = ref('Kalender Program')
 import { ref, reactive, onMounted } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'

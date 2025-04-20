@@ -173,7 +173,6 @@ const form = ref({
   ic_no: '',
   position: '',
   department: '',
-  unit: '',
   phone_no: '',
   email: '',
   password: '',
@@ -212,7 +211,6 @@ onMounted(async () => {
     form.value.ic_no = userRes.data.ic_no
     form.value.position = userRes.data.position
     form.value.department = userRes.data.department
-    form.value.unit = userRes.data.unit
     form.value.phone_no = userRes.data.phone_no
     form.value.email = userRes.data.email
     form.value.unit_id = userRes.data.unit_id

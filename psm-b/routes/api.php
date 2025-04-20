@@ -9,6 +9,8 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\ProgramController;
+
 
 
 Route::get('/user', function (Request $request) {
@@ -22,6 +24,7 @@ Route::get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('students', StudentController::class);
     Route::apiResource('users', UserController::class);
+    Route::apiResource('programs', ProgramController::class);
 
     Route::get('student/{student}', [StudentController::class, 'show']);
     Route::get('classes', ClassController::class);
@@ -33,6 +36,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
     Route::get('/units', [UnitController::class, 'index']);
+    Route::get('/programs', [ProgramController::class, 'index']);
+    Route::get('/programs/{id}', [ProgramController::class, 'show']);
+    Route::put('/programs/{id}', [ProgramController::class, 'update']);
+    Route::delete('/programs/{id}', [ProgramController::class, 'destroy']);
 
 
 

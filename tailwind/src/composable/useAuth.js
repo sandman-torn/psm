@@ -26,6 +26,8 @@ export default function useAuth() {
   const attempt = async () => {
     try {
       let response = await axios.get('/api/user')
+      const userData = response.data
+      console.log('User Data:', userData)
       setAuthenticated(true)
       setUser(response.data)
 
@@ -41,6 +43,9 @@ export default function useAuth() {
 
     try {
       const response = await axios.post('/login', form)
+
+      localStorage.setItem('authRole', 'Peserta') // Save role
+
       return attempt()
     } catch (error) {
       if ((error.response.status = 422)) {

@@ -15,7 +15,7 @@
 <script setup>
 import { ref } from 'vue'
 import PageBreadcrumb from '@/components/common/PageBreadcrumb.vue'
-import AdminLayout from '@/components/layout/AdminLayout.vue'
+import AdminLayout from '@/components/layout/AdminLayoutPentadbir.vue'
 import DefaultInputs from '@/components/forms/FormElements/DefaultInputsUserUpdate.vue'
 import ComponentCard from '@/components/common/ComponentCard.vue'
 import SelectInput from '@/components/forms/FormElements/SelectInput.vue'

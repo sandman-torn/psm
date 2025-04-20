@@ -12,18 +12,33 @@ import router from './router';
 import VueApexCharts from 'vue3-apexcharts';
 import axios from 'axios';
 import useAuth from './composable/useAuth';
+import useAuthPenganjur from './composable/useAuthPenganjur'
+import useAuthPentadbir from './composable/useAuthPentadbir'
 
 axios.defaults.baseURL = 'http://psm-b.test';
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
 
-const app = createApp(App);
-const { attempt } = useAuth();
 
+const authRole = localStorage.getItem('authRole') // 'Peserta', 'Penganjur', 'Pentadbir'
+let attemptPromise
 
-attempt().then(() => {
-app.use(router);
-app.use(VueApexCharts);
+if (authRole === 'Pentadbir') {
+    const { attempt } = useAuthPentadbir()
+    attemptPromise = attempt()
+  } else if (authRole === 'Penganjur') {
+    const { attempt } = useAuthPenganjur()
+    attemptPromise = attempt()
+  } else {
+    const { attempt } = useAuth() // default Peserta
+    attemptPromise = attempt()
+  }
+  
+  const app = createApp(App);
 
-app.mount('#app');
-});
+// Proceed after session attempt check
+attemptPromise.finally(() => {
+    app.use(router)
+    app.use(VueApexCharts)
+    app.mount('#app')
+  })

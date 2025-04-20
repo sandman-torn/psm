@@ -192,7 +192,7 @@ const register = async () => {
                 <img width="150" height="{20}" src="/images/logo/ePNJevent.png" alt="Logo" />
               </router-link>
               <p class="text-center text-gray-400 dark:text-white/60">
-                Sistem Pengurusan Kursus
+                Sistem Pengurusan Program Jabatan
               </p>
             </div>
           </div>

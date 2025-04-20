@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import redirectIfGuest from '@/middleware/redirectIfGuest'
 import redirectIfGuestPentadbir from '@/middleware/redirectIfGuestPentadbir'
+import authPentadbir from '@/middleware/authPentadbir'
 import redirectIfAuthenticated from '@/middleware/redirectIfAuthenticated'
 import middlewarePipeline from './middlewarePipeline'
 
@@ -25,16 +26,24 @@ const router = createRouter({
       component: () => import('../views/EcommercePentadbir.vue'),
       meta: {
         title: 'Pentadbir Dashboard',
-        middleware: [redirectIfGuestPentadbir],
+        //middleware: [redirectIfGuestPentadbir, authPentadbir],
+      },
+    },
+    {
+      path: '/dashboardPenganjur',
+      name: 'DashboardPenganjur',
+      component: () => import('../views/EcommercePenganjur.vue'),
+      meta: {
+        title: 'Pentadbir Dashboard',
 
       },
     },
     {
       path: '/calendar',
-      name: 'Calendar',
+      name: 'Kalendar Program',
       component: () => import('../views/Others/Calendar.vue'),
       meta: {
-        title: 'Calendar',
+        title: 'Kalendar Program',
       },
     },
     {
@@ -59,7 +68,16 @@ const router = createRouter({
       component: () => import('../views/Forms/FormRegisterUser.vue'),
       meta: {
         title: 'Pendaftaran Pengguna',
-        middleware: [redirectIfGuest],
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
+      path: '/form-add-program',
+      name: 'Tambah Program',
+      component: () => import('../views/Forms/FormAddProgram.vue'),
+      meta: {
+        title: 'Tambah Program',
+        //middleware: [redirectIfGuest],
       },
     },
     {
@@ -68,7 +86,16 @@ const router = createRouter({
       component: () => import('../views/Forms/FormUpdateUser.vue'),
       meta: {
         title: 'Pendaftaran Pengguna',
-        middleware: [redirectIfGuest],
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
+      path: '/programs/:id/edit',
+      name: 'Borang Kemaskini Program.edit',
+      component: () => import('../views/Forms/FormUpdateProgram.vue'),
+      meta: {
+        title: 'Kemaskini Program',
+        //middleware: [redirectIfGuest],
       },
     },
     {
@@ -77,7 +104,16 @@ const router = createRouter({
       component: () => import('../views/Tables/BasicTables.vue'),
       meta: {
         title: 'Basic Tables',
-        middleware: [redirectIfGuest],
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
+      path: '/senarai-program',
+      name: 'Senarai Program Utama',
+      component: () => import('../views/Programs/viewSenaraiProgramPenganjur.vue'),
+      meta: {
+        title: 'Senarai Program Utama',
+        //middleware: [redirectIfGuest],
       },
     },
     {
@@ -168,6 +204,16 @@ const router = createRouter({
         //middleware: [redirectIfAuthenticated],
       },
     },
+
+    {
+      path: '/signin',
+      name: 'Signin Peserta',
+      component: () => import('../views/Auth/Signin.vue'),
+      meta: {
+        title: 'Signin Peserta',
+        //middleware: [redirectIfAuthenticated],
+      },
+    },
     {
       path: '/pentadbir',
       name: 'Pentadbir',
@@ -223,6 +269,6 @@ router.beforeEach((to, from, next) => {
 export default router
 
 router.beforeEach((to, from, next) => {
-  document.title = `ePNJevent ${to.meta.title} | Sistem Pengurusan Kursus`
+  document.title = `ePNJevent ${to.meta.title} | Sistem Pengurusan Program Jabatan`
   next()
 })

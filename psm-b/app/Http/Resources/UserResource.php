@@ -21,7 +21,8 @@ class UserResource extends JsonResource
             "ic_no" => $this->ic_no,
             "position" => $this->position,
             "department" => $this->department,
-            "unit" => $this->unit,
+            "unit_id" => $this->unit_id,
+            "unit" => $this->unit ? $this->unit->unit : null, // <- Add this line
             "phone_no" => $this->phone_no,
             'roles' => $this->roles->pluck('role'), // or ->pluck('role') if column is `role`
 

@@ -185,14 +185,15 @@ const menuGroups = [
     items: [
       {
         icon: GridIcon,
-        name: "Dashboard ",
-        subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+        name: 'Dashboard',
+        path: '/dashboard',
+        //subItems: [{ name: "Dashboard Utama", path: "/dashboardPenganjur", pro: false }],
       },
       {
         name: "Pengurusan Pengguna",
         icon: TableIcon,
         subItems: [{ name: "Senarai Pengguna", path: "/basic-tables", pro: false }],
-        roles: ['Peserta', 'Pentadbir'],
+        roles: ['Pentadbir'],
 
         //hidden: true, // 👈 hide this menu item
       },
@@ -200,7 +201,7 @@ const menuGroups = [
         icon: CalenderIcon,
         name: "Pengurusan Program",
         path: "/calendar",
-        roles: ['Peserta', 'Pentadbir'],
+        roles: ['Penganjur', 'Pentadbir'],
       },
 
       {
@@ -232,7 +233,7 @@ const menuGroups = [
         icon: UserCircleIcon,
         name: "Profil Pengguna",
         path: "/profile",
-        roles: ['Peserta', 'Pentadbir'],
+        roles: ['Pesertaa', 'Pentadbir'],
       },
 
       {

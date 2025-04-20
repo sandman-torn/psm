@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         return UserResource::collection(
-            User::with('roles:id,role')->select('id', 'name', 'email', 'ic_no', 'position', 'department', 'unit', 'phone_no')->get()
+            User::with(['roles:id,role', 'unit:id,unit'])->select('id', 'name', 'email', 'ic_no', 'position', 'department', 'unit_id', 'phone_no')->get()
         );
     }
 
@@ -71,7 +71,6 @@ class UserController extends Controller
             'ic_no' => 'required|string|max:12|unique:users,ic_no,' . $id, //validate unique except for ic_no
             'position' => 'required|string|max:255',
             'department' => 'required|string|max:255',
-            'unit' => 'string|max:255',
             'phone_no' => 'required|string|max:15',
             'unit_id' => [
                 Rule::requiredIf(function () use ($request) {
@@ -90,15 +89,16 @@ class UserController extends Controller
             'ic_no' => $request->ic_no,
             'position' => $request->position,
             'department' => $request->department,
-            'unit' => $request->unit,
             'phone_no' => $request->phone_no,
             'password' => Hash::make($request->password),
             'unit_id' => $request->unit_id,
+            
 
         ]);
 
         $user->roles()->sync($request->roles); // Sync roles
         return response()->json(['message' => 'User updated successfully']);
+        
     }
 
     public function destroy($id)

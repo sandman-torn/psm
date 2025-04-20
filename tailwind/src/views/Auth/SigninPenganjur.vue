@@ -4,7 +4,7 @@ import { reactive } from 'vue';
 import router from '@/router';
 import CommonGridShape from '@/components/common/CommonGridShape.vue';
 import FullScreenLayout from '@/components/layout/FullScreenLayout.vue';
-import useAuth from '@/composable/useAuthPentadbir';
+import useAuth from '@/composable/useAuthPenganjur';
 
 
 const { login: loginAction, errors, attempt } = useAuth();
@@ -16,7 +16,7 @@ const togglePasswordVisibility = () => {
 }
 
 const form = reactive({
-  email: 'mohd_satip@yahoo.com',
+  email: 'hairul@johor.gov.my',
   password: 'password'
 });
 
@@ -25,7 +25,7 @@ const login = async () => {
     await loginAction(form);
     await attempt() // Removed as the function is not defined
     // Redirect to dashboard or home page after successful login
-    router.push({ name: 'DashboardPentadbir' });
+    router.push({ name: 'DashboardPenganjur' });
   } catch (err) {
     // handle errors
   }
@@ -150,7 +150,7 @@ const login = async () => {
                 <img width="150" height="{20}" src="/images/logo/ePNJevent.png" alt="Logo" />
               </router-link>
               <p class="text-center text-gray-400 dark:text-white/60">
-                Sistem Pengurusan Kursus
+                Sistem Pengurusan Program Jabatan
               </p>
             </div>
           </div>
