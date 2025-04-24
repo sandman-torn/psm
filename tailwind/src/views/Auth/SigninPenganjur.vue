@@ -16,7 +16,7 @@ const togglePasswordVisibility = () => {
 }
 
 const form = reactive({
-  email: 'hairul@johor.gov.my',
+  ic_no: '841125015244',
   password: 'password'
 });
 
@@ -50,21 +50,21 @@ const login = async () => {
                 <a class="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
                   Penganjur Kursus
                 </a>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
-                  Masukkan emel dan kata laluan anda untuk Log Masuk!
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  Masukkan Kad Pengenalan dan kata laluan anda untuk Log Masuk!
                 </p>
               </div>
               <div>
                 <form @submit.prevent="login">
                   <div class="space-y-5">
-                    <!-- Email -->
+                    <!-- ic_no -->
                     <div>
-                      <label for="email" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                        Emel<span class="text-error-500">*</span>
+                      <label for="ic_no" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                        No Kad Pengenalan<span class="text-error-500">*</span>
                       </label>
-                      <input v-model="form.email" id="email" name="email" type="email"
+                      <input v-model="form.ic_no" id="ic_no" name="ic_no" type="ic_no"
                         class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
-                      <p v-if="errors.email" class="mt-2 text-sm text-red-600" id="email-error">{{ errors.email[0] }}
+                      <p v-if="errors.ic_no" class="mt-2 text-sm text-red-600" id="ic_no-error">{{ errors.ic_no[0] }}
                       </p>
                     </div>
                     <!-- Password -->

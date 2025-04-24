@@ -190,10 +190,10 @@ const menuGroups = [
         //subItems: [{ name: "Dashboard Utama", path: "/dashboardPenganjur", pro: false }],
       },
       {
-        name: "Pengurusan Pengguna",
+        name: "Pengurusan Program",
         icon: TableIcon,
-        subItems: [{ name: "Senarai Pengguna", path: "/basic-tables", pro: false }],
-        roles: ['Pentadbir'],
+        subItems: [{ name: "Senarai Program Peserta", path: "/senarai-program-peserta", pro: false }],
+        roles: ['Peserta'],
 
         //hidden: true, // 👈 hide this menu item
       },

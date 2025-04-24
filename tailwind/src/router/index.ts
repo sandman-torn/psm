@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import redirectIfGuest from '@/middleware/redirectIfGuest'
+import redirectIfGuestPreRegisterProgram from '@/middleware/redirectIfGuestPreRegisterProgram'
 import redirectIfGuestPentadbir from '@/middleware/redirectIfGuestPentadbir'
 import authPentadbir from '@/middleware/authPentadbir'
 import redirectIfAuthenticated from '@/middleware/redirectIfAuthenticated'
@@ -52,6 +53,31 @@ const router = createRouter({
       component: () => import('../views/Others/UserProfile.vue'),
       meta: {
         title: 'Profile',
+      },
+    },
+    {
+      path: '/program/:id',
+      name: 'View Program',
+      component: () => import('../views/Programs/ViewProgramPeserta.vue'),
+      meta: {
+        title: 'Program',
+      },
+    },
+    {
+      path: '/program-penganjur/:id',
+      name: 'View Program Penganjur',
+      component: () => import('../views/Programs/ViewProgramPenganjur.vue'),
+      meta: {
+        title: 'Program',
+      },
+    },
+    {
+      path: '/pra-pendaftaran-program/:id',
+      name: 'Pra-Pendaftaran Program',
+      component: () => import('../views/Programs/ViewProgramPraDaftarPeserta.vue'),
+      meta: {
+        title: 'Pra-Pendaftaran Program',
+        middleware: [redirectIfGuestPreRegisterProgram],
       },
     },
     {
@@ -108,11 +134,29 @@ const router = createRouter({
       },
     },
     {
+      path: '/senarai-peserta-program/:id',
+      name: 'Senarai Peserta Program',
+      component: () => import('../views/Tables/BasicTablesPesertaProgramPenganjur.vue'),
+      meta: {
+        title: 'Senarai Peserta Program',
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
       path: '/senarai-program',
       name: 'Senarai Program Utama',
       component: () => import('../views/Programs/viewSenaraiProgramPenganjur.vue'),
       meta: {
         title: 'Senarai Program Utama',
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
+      path: '/senarai-program-peserta',
+      name: 'Senarai Program Peserta',
+      component: () => import('../views/Programs/viewSenaraiProgramPeserta.vue'),
+      meta: {
+        title: 'Senarai Program Peserta',
         //middleware: [redirectIfGuest],
       },
     },
@@ -215,6 +259,15 @@ const router = createRouter({
       },
     },
     {
+      path: '/signin-pre-register',
+      name: 'SigninPreRegister',
+      component: () => import('../views/Auth/SigninPreRegister.vue'),
+      meta: {
+        title: 'Signin Pra Pendaftaran',
+        //middleware: [redirectIfAuthenticated],
+      },
+    },
+    {
       path: '/pentadbir',
       name: 'Pentadbir',
       component: () => import('../views/Auth/SigninPentadbir.vue'),
@@ -238,6 +291,14 @@ const router = createRouter({
       component: () => import('../views/Auth/Signup.vue'),
       meta: {
         title: 'Signup',
+      },
+    },
+    {
+      path: '/signup-pre-register',
+      name: 'SignupPreRegister',
+      component: () => import('../views/Auth/SignupPreRegister.vue'),
+      meta: {
+        title: 'Signup Pre Registration',
       },
     },
     {

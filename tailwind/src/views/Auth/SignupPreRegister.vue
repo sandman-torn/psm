@@ -6,6 +6,9 @@ import useAuth from '@/composable/useAuth'
 import router from '@/router'
 import axios from 'axios'
 import { reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
 
 const { attempt } = useAuth()
 
@@ -17,14 +20,14 @@ const togglePasswordVisibility = () => {
 }
 
 const form = reactive({
-  name: '',
-  email: '',
-  ic_no: '',
-  position: '',
-  department: '',
-  phone_no: '',
-  password: '',
-  password_confirmation: '',
+  name: 'Satip',
+  email: 'satip@johor.gov.my',
+  ic_no: '841129015403',
+  position: 'Penolong Akauntan',
+  department: 'Perbendaharaan Negeri Johor',
+  phone_no: '0197588545',
+  password: 'password',
+  password_confirmation: 'password',
   role_id: 1,
   unit: '-',
 })
@@ -36,8 +39,9 @@ const register = async () => {
     .post('/register', form)
     .then(() => {
       attempt().then(() => {
-        // Redirect to dashboard or home page after successful login
-        router.push({ name: 'Dashboard' })
+        // Redirect to pre-register page after successful login
+        const redirectPath = route.query.redirect || '/default-dashboard'
+        router.push(redirectPath)
       })
     })
     .catch((err) => {
@@ -69,10 +73,10 @@ const generalError = ref('')
               <h2
                 class="font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md"
               >
-                Pendaftaran
-              </h2>
+              Pra-Pendaftaran Program
+            </h2>
               <p class="text-sm text-gray-500 dark:text-gray-400">
-                Masukkan emel dan kata laluan anda untuk mendaftar!
+                Lengkapkan butiran dibawah untuk mendaftar!
               </p>
               <p v-if="generalError" class="mt-2 text-sm text-red-600">
                 {{ generalError }}
@@ -137,7 +141,7 @@ const generalError = ref('')
                         type="text"
                         id="position"
                         name="position"
-                        placeholder="Masukkan jawatan anda"
+                        placeholder="Masukkan no kp anda"
                         class="dark:bg-dark-900 h-8 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
                       />
                       <p v-if="errors.position" class="mt-2 text-sm text-red-600">
@@ -160,7 +164,7 @@ const generalError = ref('')
                         type="text"
                         id="department"
                         name="department"
-                        placeholder="Masukkan nama jabatan"
+                        placeholder="Masukkan no kp anda"
                         class="dark:bg-dark-900 h-8 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
                       />
                       <p v-if="errors.position" class="mt-2 text-sm text-red-600">
@@ -180,7 +184,7 @@ const generalError = ref('')
                         type="text"
                         id="phone_no"
                         name="phone_no"
-                        placeholder="No telefon tanpa'-'"
+                        placeholder="Masukkan no kp anda"
                         class="dark:bg-dark-900 h-8 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
                       />
                       <p v-if="errors.phone_no" class="mt-2 text-sm text-red-600">
@@ -411,7 +415,9 @@ const generalError = ref('')
               <router-link to="/" class="block mb-4">
                 <img width="150" height="{20}" src="/images/logo/ePNJevent.png" alt="Logo" />
               </router-link>
-              <p class="text-center text-gray-400 dark:text-white/60">Sistem Pengurusan Program Jabatan</p>
+              <p class="text-center text-gray-400 dark:text-white/60">
+                Sistem Pengurusan Program Jabatan
+              </p>
             </div>
           </div>
         </div>

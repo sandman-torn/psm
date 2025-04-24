@@ -77,10 +77,10 @@ onUnmounted(() => {
     >
       <div>
         <span class="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-          Musharof Chowdhury
+          {{ user.name }}
         </span>
         <span class="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-          randomuser@pimjo.com
+          {{ user.email }}
         </span>
       </div>
 

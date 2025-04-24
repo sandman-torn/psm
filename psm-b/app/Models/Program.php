@@ -28,7 +28,9 @@ class Program extends Model
 
     public function participants()
     {
-        return $this->hasMany(Participant::class);
+        //return $this->hasMany(Participant::class);
+        return $this->belongsToMany(User::class, 'participants', 'program_id', 'user_id');
+
     }
 
     public function creator()
@@ -41,5 +43,11 @@ class Program extends Model
     {
         return $this->belongsTo(Unit::class, 'by_unit');
     }
+
+    public function organizer()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
 
 }

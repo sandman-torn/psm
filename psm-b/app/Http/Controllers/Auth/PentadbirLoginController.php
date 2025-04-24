@@ -12,14 +12,15 @@ class PentadbirLoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
+            //'ic_no' => 'required|ic_no',
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
         // Optionally, you can limit the login to users with role_id = 3 (Pentadbir)
-        if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+        if (!Auth::attempt($request->only('ic_no', 'password'), $request->filled('remember'))) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'ic_no' => ['The provided credentials are incorrect.'],
             ]);
         }
 
@@ -28,7 +29,7 @@ class PentadbirLoginController extends Controller
         if (!$user->roles->contains('id', 3)) {
             Auth::logout();
             throw ValidationException::withMessages([
-                'email' => ['You do not have permission to login as Pentadbir.'],
+                'ic_no' => ['You do not have permission to login as Pentadbir.'],
             ]);
         }
 

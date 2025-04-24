@@ -250,19 +250,19 @@ onMounted(() => {
   events.value = [
     {
       id: '1',
-      title: 'Event Conf.',
+      title: 'Kursus Penyediaan Kertas Kerja',
       start: new Date().toISOString().split('T')[0],
       extendedProps: { calendar: 'Danger' },
     },
     {
       id: '2',
-      title: 'Meeting',
+      title: 'Bengkel Tatacara Kewangan Modul Terimaan',
       start: new Date(Date.now() + 86400000).toISOString().split('T')[0],
       extendedProps: { calendar: 'Success' },
     },
     {
       id: '3',
-      title: 'Workshop',
+      title: 'Taklimat Penggunaan Fail',
       start: new Date(Date.now() + 172800000).toISOString().split('T')[0],
       end: new Date(Date.now() + 259200000).toISOString().split('T')[0],
       extendedProps: { calendar: 'Primary' },

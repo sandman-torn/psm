@@ -3,14 +3,6 @@
     class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]"
   >
     <div class="max-w-full overflow-x-auto custom-scrollbar">
-      <div class="flex justify-end mt-6 mb-4 mr-4">
-        <RouterLink
-          :to="{ name: 'Borang Pendaftaran Pengguna' }"
-          class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-        >
-          Tambah Pengguna
-        </RouterLink>
-      </div>
 
       <table class="min-w-full">
         <thead>
@@ -23,9 +15,7 @@
             <th class="px-5 py-3 text-left w-2/11 sm:px-6">
               <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">myKad</p>
             </th>
-            <th class="px-5 py-3 text-left w-2/11 sm:px-6">
-              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Peranan</p>
-            </th>
+
             <th class="px-5 py-3 text-left w-2/11 sm:px-6">
               <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Jawatan</p>
             </th>
@@ -33,7 +23,7 @@
               <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Jabatan</p>
             </th>
             <th class="px-5 py-3 text-left w-2/11 sm:px-6">
-              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Tindakan</p>
+              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Status</p>
             </th>
           </tr>
         </thead>
@@ -61,11 +51,7 @@
             <td class="px-5 py-4 sm:px-6">
               <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ user.ic_no }}</p>
             </td>
-            <td class="px-5 py-4 sm:px-6">
-              <p class="text-gray-500 text-theme-sm dark:text-gray-400">
-                {{ user.roles.join(', ') }}
-              </p>
-            </td>
+
             <td class="px-5 py-4 sm:px-6">
               <p class="text-gray-500 text-theme-sm dark:text-gray-400">
                 {{ user.position }}
@@ -75,20 +61,7 @@
               <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ user.department }}</p>
             </td>
             <td class="px-5 py-4 sm:px-6">
-              <div class="flex gap-2">
-                <RouterLink :to="{ name: 'Borang Kemaskini Pengguna.edit', params: { id: user.id } }"
-                  class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                >
-                Ubah
-                </RouterLink>
-                
-                <button
-                  @click="confirmDelete(user.id)"
-                  class="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-3 py-1 rounded"
-                >
-                  Padam
-                </button>
-              </div>
+              <p class="text-gray-500 text-theme-sm dark:text-gray-400">Daftar</p>
             </td>
           </tr>
         </tbody>
@@ -131,39 +104,11 @@ import { ref, onMounted, reactive } from 'vue'
 import axios from 'axios'
 import { computed } from 'vue'
 import Modal from '@/components/profile/Modal.vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute  } from 'vue-router'
 import Swal from 'sweetalert2' // Install with: npm install sweetalert2
 
 
-//Delete User
 
-const confirmDelete = async (userId) => {
-  const confirm = await Swal.fire({
-    title: 'Adakah anda pasti?',
-    text: 'Pengguna ini akan dipadam.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Ya, padam!',
-    cancelButtonText: 'Batal'
-  })
-
-  if (confirm.isConfirmed) {
-    try {
-      await axios.delete(`/api/users/${userId}`)
-
-      Swal.fire('Berjaya!', 'Pengguna telah dipadam.', 'success')
-
-      // ❗ Instead of pushing route again, just refresh the list:
-      fetchUsers()
-    } catch (error) {
-      console.error(error)
-      Swal.fire('Ralat', 'Gagal memadam pengguna.', 'error')
-    }
-  }
-}
-
-
-//End delet User
 
 //Pagination
 const users = ref([]) // All users
@@ -187,15 +132,19 @@ const changePage = (page) => {
 //end Pagination
 
 //fetch users
+
+const route = useRoute()
+const programId = route.params.id // this gets '16' from the URL
+
 const fetchUsers = async () => {
   try {
-    const response = await axios.get('/api/users')
-    users.value = response.data // if using resource
-    // OR: users.value = response.data if not using resource
+    const response = await axios.get(`/api/programs/${programId}/participants`)
+    users.value = response.data
   } catch (error) {
-    console.error('Failed to fetch users:', error)
+    console.error('Failed to fetch participants:', error)
   }
 }
+
 
 onMounted(fetchUsers)
 //end fetch users

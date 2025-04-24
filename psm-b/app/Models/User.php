@@ -68,4 +68,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Unit::class, 'unit_id','id');
     }
+
+    public function programs()
+{
+    return $this->belongsToMany(Program::class, 'participants', 'user_id', 'program_id');
+}
+
 }

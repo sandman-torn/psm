@@ -10,6 +10,8 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ProgramRegistrationController;
+use App\Http\Controllers\ParticipantController;
 
 
 
@@ -40,7 +42,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/programs/{id}', [ProgramController::class, 'show']);
     Route::put('/programs/{id}', [ProgramController::class, 'update']);
     Route::delete('/programs/{id}', [ProgramController::class, 'destroy']);
+    Route::post('/programs/{id}/register', [ProgramRegistrationController::class, 'register']);
+    Route::get('/peserta/programs', [ProgramController::class, 'indexPesertaPrograms']);//dptkan count peserta program
+    Route::get('/programs/{id}/participants', [ProgramController::class, 'getParticipants']);//liskan senarai peserta proram
 
+    
 
 
 });

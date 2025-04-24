@@ -65,7 +65,9 @@ class ProgramController extends Controller
      */
     public function show(string $id)
     {
-        $program = Program::with(['creator', 'unit'])->findOrFail($id);
+        $program = Program::with(['creator', 'unit'])
+            ->withCount('participants') // ← Count how many participants
+            ->findOrFail($id);
         return new ProgramResource($program);
     }
 
@@ -110,5 +112,23 @@ class ProgramController extends Controller
         $program = Program::findOrFail($id);
         $program->delete();
         return response()->noContent();
+    }
+
+    public function indexPesertaPrograms()
+    {
+        $user = Auth::user();
+
+        // Pastikan user ada relation "programs"
+        $programs = $user->programs()->with(['creator', 'unit'])->latest()->get();
+
+
+        return ProgramResource::collection($programs);
+    }
+
+    public function getParticipants($id)
+    {
+        $program = Program::with('participants')->findOrFail($id);
+
+        return response()->json($program->participants);
     }
 }
