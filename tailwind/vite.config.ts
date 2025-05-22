@@ -13,6 +13,7 @@ export default defineConfig({
     vue(),
     vueJsx(),
     vueDevTools(),
+    base: '/sandman-torn/psm/tailwind/',
   ],
   resolve: {
     //alias: {
