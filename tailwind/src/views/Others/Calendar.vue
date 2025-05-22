@@ -17,25 +17,25 @@
             <h5
               class="mb-2 font-semibold text-gray-800 modal-title text-theme-xl dark:text-white/90 lg:text-2xl"
             >
-              {{ selectedEvent ? 'Edit Event' : 'Add Event' }}
+              {{ selectedEvent ? 'Kemaskini Program' : 'Tambah Program' }}
             </h5>
             <p class="text-sm text-gray-500 dark:text-gray-400">
-              Plan your next big moment: schedule or edit an event to stay on track
+              Kemaskini program anda di sini
             </p>
 
             <div class="mt-8">
               <div>
                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  Event Title
+                  Nama Program
                 </label>
-                <input
+                <input disabled
                   v-model="eventTitle"
                   type="text"
                   class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
                 />
               </div>
 
-              <div class="mt-6">
+              <!-- <div class="mt-6">
                 <label class="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">
                   Event Color
                 </label>
@@ -66,13 +66,13 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <div class="mt-6">
                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  Enter Start Date
+                  Tarikh Mula
                 </label>
-                <input
+                <input disabled
                   v-model="eventStartDate"
                   type="date"
                   class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
@@ -81,9 +81,9 @@
 
               <div class="mt-6">
                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  Enter End Date
+                  Tarikh Tamat
                 </label>
-                <input
+                <input disabled
                   v-model="eventEndDate"
                   type="date"
                   class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
@@ -99,7 +99,7 @@
                 Close
               </button>
 
-              <button
+              <!-- <button
                 @click="handleAddOrUpdateEvent"
                 class="btn btn-success btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-600 sm:w-auto"
               >
@@ -111,7 +111,7 @@
                 class="flex w-full justify-center rounded-lg border border-error-500 bg-error-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-error-600 sm:w-auto"
               >
                 Delete Event
-              </button>
+              </button> -->
             </div>
           </div>
         </template>
@@ -229,6 +229,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import Modal from '@/components/profile/Modal.vue'
+import axios from 'axios'
 
 const calendarRef = ref(null)
 const isOpen = ref(false)
@@ -246,28 +247,14 @@ const calendarsEvents = reactive({
   Warning: 'warning',
 })
 
-onMounted(() => {
-  events.value = [
-    {
-      id: '1',
-      title: 'Kursus Penyediaan Kertas Kerja',
-      start: new Date().toISOString().split('T')[0],
-      extendedProps: { calendar: 'Danger' },
-    },
-    {
-      id: '2',
-      title: 'Bengkel Tatacara Kewangan Modul Terimaan',
-      start: new Date(Date.now() + 86400000).toISOString().split('T')[0],
-      extendedProps: { calendar: 'Success' },
-    },
-    {
-      id: '3',
-      title: 'Taklimat Penggunaan Fail',
-      start: new Date(Date.now() + 172800000).toISOString().split('T')[0],
-      end: new Date(Date.now() + 259200000).toISOString().split('T')[0],
-      extendedProps: { calendar: 'Primary' },
-    },
-  ]
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/calendar/events')
+    console.log('dapat apa:',response)
+    events.value = response.data
+  } catch (error) {
+    console.error('Failed to fetch calendar events:', error)
+  }
 })
 
 const openModal = () => {
@@ -367,9 +354,11 @@ const calendarOptions = reactive({
   eventContent: renderEventContent,
   customButtons: {
     addEventButton: {
-      text: 'Add Event +',
+      text: 'Tambah Event +',
       click: openModal,
     },
   },
 })
+
+
 </script>

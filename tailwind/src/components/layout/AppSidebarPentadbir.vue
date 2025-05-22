@@ -26,9 +26,9 @@
         <img
           v-if="isExpanded || isHovered || isMobileOpen"
           class="hidden dark:block mx-auto"
-          src="/images/logo/ePNJevent.png"
+          src="/images/logo/ePNJevent_horizantal.png"
           alt="Logo"
-          width="150"
+          width="220"
           height="40"
         />
         <img v-else src="/images/logo/ePNJevent.png" alt="Logo" width="50" height="32" />

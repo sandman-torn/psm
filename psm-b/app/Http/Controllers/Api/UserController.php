@@ -7,9 +7,31 @@ use app\Models\User;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use App\Models\Role;
 
 class UserController extends Controller
 {
+
+    public function getUserCounts()
+    {
+        $pesertaCount = User::whereHas('roles', function ($query) {
+            $query->where('role_id', 1);
+        })->count();
+
+        $penganjurCount = User::whereHas('roles', function ($query) {
+            $query->where('role_id', 2);
+        })->count();
+
+        $pentadbirCount = User::whereHas('roles', function ($query) {
+            $query->where('role_id', 3);
+        })->count();
+
+        return response()->json([
+            'peserta' => $pesertaCount,
+            'penganjur' => $penganjurCount,
+            'pentadbir' => $pentadbirCount,
+        ]);
+    }
     public function index()
     {
         return UserResource::collection(
@@ -79,7 +101,7 @@ class UserController extends Controller
                 'nullable',
                 'exists:units,id'
             ],
-            
+
         ]);
 
         $user = User::findOrFail($id);
@@ -90,15 +112,15 @@ class UserController extends Controller
             'position' => $request->position,
             'department' => $request->department,
             'phone_no' => $request->phone_no,
-            'password' => Hash::make($request->password),
+            //'password' => Hash::make($request->password),
             'unit_id' => $request->unit_id,
-            
+
 
         ]);
 
         $user->roles()->sync($request->roles); // Sync roles
         return response()->json(['message' => 'User updated successfully']);
-        
+
     }
 
     public function destroy($id)

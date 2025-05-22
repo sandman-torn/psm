@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import redirectIfGuest from '@/middleware/redirectIfGuest'
 import redirectIfGuestPreRegisterProgram from '@/middleware/redirectIfGuestPreRegisterProgram'
+import redirectIfGuestDaftarKehadiranProgram from '@/middleware/redirectIfGuestDaftarKehadiranProgram'
+redirectIfGuestDaftarKehadiranProgram
 import redirectIfGuestPentadbir from '@/middleware/redirectIfGuestPentadbir'
 import authPentadbir from '@/middleware/authPentadbir'
 import redirectIfAuthenticated from '@/middleware/redirectIfAuthenticated'
@@ -27,7 +29,7 @@ const router = createRouter({
       component: () => import('../views/EcommercePentadbir.vue'),
       meta: {
         title: 'Pentadbir Dashboard',
-        //middleware: [redirectIfGuestPentadbir, authPentadbir],
+        middleware: [authPentadbir],
       },
     },
     {
@@ -72,6 +74,14 @@ const router = createRouter({
       },
     },
     {
+      path: '/program-penganjur-muat-naik-bahan/:id',
+      name: 'View Program Penganjur Muat Naik Bahan',
+      component: () => import('../views/Programs/ViewProgramMaterialPenganjur.vue'),
+      meta: {
+        title: 'Program (muat Naik Bahan)',
+      },
+    },
+    {
       path: '/pra-pendaftaran-program/:id',
       name: 'Pra-Pendaftaran Program',
       component: () => import('../views/Programs/ViewProgramPraDaftarPeserta.vue'),
@@ -80,6 +90,16 @@ const router = createRouter({
         middleware: [redirectIfGuestPreRegisterProgram],
       },
     },
+    {
+      path: '/daftar-kehadiran-program/:id',
+      name: 'Daftar Kehahadiran Program',
+      component: () => import('../views/Programs/ViewProgramDaftarKehadiranPeserta.vue'),
+      meta: {
+        title: 'Daftar Kehadiran Program',
+        middleware: [redirectIfGuestDaftarKehadiranProgram],
+      },
+    },
+    
     {
       path: '/form-elements',
       name: 'Form Elements',
@@ -116,6 +136,33 @@ const router = createRouter({
       },
     },
     {
+      path: '/profile-pentadbir/:id/edit',
+      name: 'Kemaskini Profil Pentadbir.edit',
+      component: () => import('../views/Forms/FormUpdateProfilePentadbir.vue'),
+      meta: {
+        title: 'Kemaskini Profil',
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
+      path: '/profile-penganjur/:id/edit',
+      name: 'Kemaskini Profil Penganjur.edit',
+      component: () => import('../views/Forms/FormUpdateProfilePenganjur.vue'),
+      meta: {
+        title: 'Kemaskini Profil',
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
+      path: '/profile-peserta/:id/edit',
+      name: 'Kemaskini Profil Peserta.edit',
+      component: () => import('../views/Forms/FormUpdateProfilePeserta.vue'),
+      meta: {
+        title: 'Kemaskini Profil',
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
       path: '/programs/:id/edit',
       name: 'Borang Kemaskini Program.edit',
       component: () => import('../views/Forms/FormUpdateProgram.vue'),
@@ -125,12 +172,30 @@ const router = createRouter({
       },
     },
     {
+      path: '/programs-kehadiran/:id/daftar',
+      name: 'Borang Kehadiran Program.daftar',
+      component: () => import('../views/Forms/FormKehadiranProgram.vue'),
+      meta: {
+        title: 'Kemaskini Kehadiran Peserta Program',
+        //middleware: [redirectIfGuest],
+      },
+    },
+        {
+      path: '/verify-certificate/:code',
+      name: 'VerifyCertificate',
+      component: () => import('../views/Programs/VerifyCertificate.vue'),
+      meta: {
+        title: 'Pengesahan Sijil',
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
       path: '/basic-tables',
       name: 'Basic Tables',
       component: () => import('../views/Tables/BasicTables.vue'),
       meta: {
         title: 'Basic Tables',
-        //middleware: [redirectIfGuest],
+        middleware: [authPentadbir],
       },
     },
     {
@@ -142,12 +207,48 @@ const router = createRouter({
         //middleware: [redirectIfGuest],
       },
     },
+        {
+      path: '/kehadiran-peserta-program/:id',
+      name: 'Senarai Kehadiran Peserta Program',
+      component: () => import('../views/Tables/BasicTablesKehadiranPesertaProgramPenganjur.vue'),
+      meta: {
+        title: 'Senarai Kehadiran Peserta Program',
+        //middleware: [redirectIfGuest],
+      },
+    },
     {
       path: '/senarai-program',
       name: 'Senarai Program Utama',
       component: () => import('../views/Programs/viewSenaraiProgramPenganjur.vue'),
       meta: {
         title: 'Senarai Program Utama',
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
+      path: '/senarai-program-sijil',
+      name: 'Senarai Program Sijil',
+      component: () => import('../views/Programs/viewSenaraiProgramSijilPenganjur.vue'),
+      meta: {
+        title: 'Senarai Program',
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
+      path: '/senarai-program-kehadiran',
+      name: 'Senarai Program',
+      component: () => import('../views/Programs/viewSenaraiProgramKehadiranPenganjur.vue'),
+      meta: {
+        title: 'Senarai Program',
+        //middleware: [redirectIfGuest],
+      },
+    },
+    {
+      path: '/senarai-program-muat-naik-bahan',
+      name: 'Senarai Program Muat Naik Bahan',
+      component: () => import('../views/Programs/viewSenaraiProgramMaterialPenganjur.vue'),
+      meta: {
+        title: 'Senarai Program (Maut Naik Bahan)',
         //middleware: [redirectIfGuest],
       },
     },
@@ -264,6 +365,15 @@ const router = createRouter({
       component: () => import('../views/Auth/SigninPreRegister.vue'),
       meta: {
         title: 'Signin Pra Pendaftaran',
+        //middleware: [redirectIfAuthenticated],
+      },
+    },
+    {
+      path: '/signin-daftar-kehadiran',
+      name: 'SigninDafatarKehadiran',
+      component: () => import('../views/Auth/SigninDaftarKehadiran.vue'),
+      meta: {
+        title: 'Signin Daftar Kehadiran',
         //middleware: [redirectIfAuthenticated],
       },
     },

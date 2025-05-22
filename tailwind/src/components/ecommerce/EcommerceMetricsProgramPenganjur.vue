@@ -25,11 +25,11 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Program Dianjurkan</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">15 <span class="text-sm font-normal text-blue-600">Program</span></h4>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Program Dianjurkan (Unit Saya)</span>
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
+            {{ programsByUnit }} <span class="text-sm font-normal text-blue-600">Program</span>
+          </h4>
         </div>
-
-
       </div>
     </div>
 
@@ -58,11 +58,11 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Peserta Berdaftar</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">30 <span class="text-sm font-normal text-blue-600">Peserta</span></h4>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Program Dianjurkan (Semua Unit)</span>
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
+            {{ totalPrograms }} <span class="text-sm font-normal text-blue-600">Program</span>
+          </h4>
         </div>
-
-        
       </div>
     </div>
 
@@ -91,12 +91,37 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Sijil Dikeluarkan</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">15 <span class="text-sm font-normal text-blue-600">Sijil</span></h4>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Peserta Berdaftar</span>
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
+            {{ totalParticipants }} <span class="text-sm font-normal text-blue-600">Peserta</span>
+          </h4>
         </div>
-
-        
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+
+const programsByUnit = ref(0)
+const totalPrograms = ref(0)
+const totalParticipants = ref(0)
+
+const fetchDashboardCounts = async () => {
+  try {
+    const response = await axios.get('/api/penganjur/dashboard-counts')
+    console.log('dashboard count:', response)
+    programsByUnit.value = response.data.programs_by_unit
+    totalPrograms.value = response.data.total_programs
+    totalParticipants.value = response.data.total_participants
+  } catch (error) {
+    console.error('Error fetching dashboard data:', error)
+  }
+}
+
+onMounted(() => {
+  fetchDashboardCounts()
+})
+</script>

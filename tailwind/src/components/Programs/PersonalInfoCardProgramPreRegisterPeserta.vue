@@ -13,7 +13,7 @@
                 Tarikh Mula
               </p>
               <p class="text-sm font-medium text-gray-800 dark:text-white/90">
-                {{ program.date_from }}
+                {{ program.date_from_display }}
               </p>
             </div>
 
@@ -22,7 +22,7 @@
                 Tarikh Tamat
               </p>
               <p class="text-sm font-medium text-gray-800 dark:text-white/90">
-                {{ program.date_to }}
+                {{ program.date_to_display }}
               </p>
             </div>
             <div>

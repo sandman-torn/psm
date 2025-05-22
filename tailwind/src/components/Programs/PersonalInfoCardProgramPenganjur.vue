@@ -13,7 +13,7 @@
                 Tarikh Mula
               </p>
               <p class="text-sm font-medium text-gray-800 dark:text-white/90">
-                {{ program.date_from }}
+                {{ program.date_from_display }}
               </p>
             </div>
 
@@ -22,7 +22,24 @@
                 Tarikh Tamat
               </p>
               <p class="text-sm font-medium text-gray-800 dark:text-white/90">
-                {{ program.date_to }}
+                {{ program.date_to_display }}
+              </p>
+            </div>
+            <div>
+              <p class="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                Masa Mula
+              </p>
+              <p class="text-sm font-medium text-gray-800 dark:text-white/90">
+                {{ program.time_from_display }}
+              </p>
+            </div>
+
+            <div>
+              <p class="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                Masa Tamat
+              </p>
+              <p class="text-sm font-medium text-gray-800 dark:text-white/90">
+                {{ program.time_to_display }}
               </p>
             </div>
             <div>

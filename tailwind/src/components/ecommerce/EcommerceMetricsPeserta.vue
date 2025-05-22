@@ -25,8 +25,8 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Program Disertai</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">15 <span class="text-sm font-normal text-blue-600">Program</span></h4>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Program Didaftar</span>
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ dashboardData.registered }} <span class="text-sm font-normal text-blue-600">Program</span></h4>
         </div>
 
 
@@ -59,7 +59,7 @@
       <div class="flex items-end justify-between mt-5">
         <div>
           <span class="text-sm text-gray-500 dark:text-gray-400">Program Akan Datang</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">30 <span class="text-sm font-normal text-blue-600">Program</span></h4>
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ dashboardData.incoming }} <span class="text-sm font-normal text-blue-600">Program</span></h4>
         </div>
 
         
@@ -92,7 +92,7 @@
       <div class="flex items-end justify-between mt-5">
         <div>
           <span class="text-sm text-gray-500 dark:text-gray-400">Program Selesai</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">15 <span class="text-sm font-normal text-blue-600">Program</span></h4>
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ dashboardData.completed }} <span class="text-sm font-normal text-blue-600">Program</span></h4>
         </div>
 
         
@@ -100,3 +100,26 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+const dashboardData = ref({
+  registered: 0,
+  incoming: 0,
+  completed: 0
+})
+
+const fetchDashboardData = async () => {
+  try {
+    const response = await axios.get('/api/dashboard-peserta')
+    console.log('dashboard count:', response)
+    dashboardData.value = response.data
+  } catch (error) {
+    console.error('Error fetching peserta dashboard:', error)
+  }
+}
+
+onMounted(fetchDashboardData)
+</script>

@@ -19,6 +19,9 @@ class Program extends Model
         'date_to',
         'location',
         'url',
+        'time_from',
+        'time_to',
+
     ];
 
     public function materials()
@@ -29,7 +32,9 @@ class Program extends Model
     public function participants()
     {
         //return $this->hasMany(Participant::class);
-        return $this->belongsToMany(User::class, 'participants', 'program_id', 'user_id');
+        //return $this->belongsToMany(User::class, 'participants', 'program_id', 'user_id', 'id');
+        return $this->hasMany(\App\Models\Participant::class);
+
 
     }
 

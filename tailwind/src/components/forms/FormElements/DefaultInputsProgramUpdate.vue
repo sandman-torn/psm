@@ -37,11 +37,10 @@
           <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
             Tarikh Mula
           </label>
-          <Datepicker
+          <input
             v-model="form.date_from"
-            format="yyyy-MM-dd"
-            id="dateFrom"
-            class="mb-4 dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+            type="date"
+            class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
           />
           <p v-if="errors.date_from" class="mt-2 text-sm text-red-600">
             {{ errors.date_from[0] }}
@@ -51,10 +50,10 @@
           <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
             Tarikh Tamat
           </label>
-          <Datepicker
+          <input
             v-model="form.date_to"
-            format="yyyy-MM-dd"
-            class="mb-4 dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+            type="date"
+            class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
           />
         </div>
       </div>
@@ -74,6 +73,36 @@
             <p v-if="errors.unit" class="mt-2 text-sm text-red-600">{{ errors.unit[0] }}</p>
           </div> 
       </div>-->
+
+      <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div class="space-y-6">
+          <!-- Input: Masa -->
+          <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+            Masa Mula
+          </label>
+          <input
+            v-model="form.time_from"
+            type="time"
+            class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+          />
+          <p v-if="errors.time_from" class="mt-2 text-sm text-red-600">
+            {{ errors.time_from[0] }}
+          </p>
+        </div>
+        <div class="space-y-6">
+          <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+            Masa Tamat
+          </label>
+          <input
+            v-model="form.time_to"
+            type="time"
+            class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+          />
+          <p v-if="errors.time_to" class="mt-2 text-sm text-red-600">
+            {{ errors.time_to[0] }}
+          </p>
+        </div>
+      </div>
 
       <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div class="space-y-6">
@@ -179,28 +208,17 @@ const { user, authenticated, logout: logoutAction } = useAuth()
 const route = useRoute()
 const router = useRouter()
 
-const form = ref<{
-  created_by: string
-  by_unit: string
-  created_by_name: string
-  by_unit_name: string
-  program_name: string
-  program_desc: string
-  date_from: Date | undefined
-  date_to: Date | undefined
-  location: string
-  url: string
-}>({
+const form = ref({
   created_by: '',
   by_unit: '',
-  created_by_name: '',
-  by_unit_name: '',
   program_name: '',
   program_desc: '',
   date_from: undefined,
   date_to: undefined,
   location: '',
   url: '',
+  time_from: '',
+  time_to: '',
 })
 
 //fetch current user information
@@ -216,16 +234,20 @@ onMounted(async () => {
     programRes.value = response.data // Assign API response to programRes
     form.value.program_name = response.data.program_name
     form.value.program_desc = response.data.program_desc
-    form.value.date_from = new Date(response.data.date_from)
-    form.value.date_to = new Date(response.data.date_to)
+    form.value.date_from = response.data.date_from
+    form.value.date_to = response.data.date_to
     form.value.location = response.data.location
     form.value.url = response.data.url
     form.value.created_by = response.data.created_by
     form.value.by_unit = response.data.by_unit
+    form.value.time_from = response.data.time_from
+    form.value.time_to = response.data.time_to
   } catch (err) {
     console.error(err)
   }
 })
+
+
 
 type ValidationErrors = {
   [key: string]: string[]
@@ -235,18 +257,23 @@ const errors = ref<ValidationErrors>({})
 
 // Submit form
 const submit = async () => {
-  errors.value = {} // clear previous errors
+  errors.value = {} // clear errors
+
+  const payload = {
+  ...form.value,
+  time_from: form.value.time_from.length === 5 ? form.value.time_from + ':00' : form.value.time_from,
+  time_to: form.value.time_to.length === 5 ? form.value.time_to + ':00' : form.value.time_to,
+}
 
   try {
     await axios.get('/sanctum/csrf-cookie')
-    console.log('Submitting form with:', form.value)
-    const response = await axios.put(`/api/programs/${route.params.id}`, form.value)
-    const programData = response.data
-    console.log('User Data:', programData)
-    console.log('Program created:', response.data)
+
+
+    const response = await axios.put(`/api/programs/${route.params.id}`, payload)
+    console.log('hantar apa:', response)
     router.push('/senarai-program')
   } catch (err: any) {
-    if (err.response && err.response.status === 422) {
+    if (err.response?.status === 422) {
       errors.value = err.response.data.errors
     }
   }

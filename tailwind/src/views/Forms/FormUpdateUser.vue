@@ -26,5 +26,5 @@ import Dropzone from '@/components/forms/FormElements/Dropzone.vue'
 import FileInput from '@/components/forms/FormElements/FileInput.vue'
 import CheckboxInput from '@/components/forms/FormElements/CheckboxInput.vue'
 
-const currentPageTitle = ref('Form Elements')
+const currentPageTitle = ref('Kemaskini Pengguna')
 </script>

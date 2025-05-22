@@ -11,12 +11,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('programs', function (Blueprint $table) {
-            $table->unsignedBigInteger('created_by')->after('id');
-            $table->string('by_unit')->after('created_by');
-
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->time('time_from')->nullable();
+            $table->time('time_to')->nullable();
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -24,8 +23,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('programs', function (Blueprint $table) {
-            $table->dropForeign(['created_by']);
-            $table->dropColumn(['created_by', 'by_unit']);
+            //
         });
     }
 };

@@ -23,14 +23,21 @@ class ProgramResource extends JsonResource
             'location' => $this->location,
 
             // Format the date to "24/04/2025"
-            'date_from' => Carbon::parse($this->date_from)->format('d/m/Y'),
-            'date_to' => Carbon::parse($this->date_to)->format('d/m/Y'),
+            'date_from' => $this->date_from, // bagi raw format dari DB
+            'date_to' => $this->date_to,
+            'date_from_display' => Carbon::parse($this->date_from)->format('d/m/Y'),
+            'date_to_display' => Carbon::parse($this->date_to)->format('d/m/Y'),
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'url' => $this->url,
-            'participants_count' => $this->participants_count, // 👈 Add this
-
+            'registered_participants_count' => $this->registered_participants_count,
+            'walkin_participants_count' => $this->walkin_participants_count,
+            'isCertificate' => $this->isCertificate,
+            'time_from' => $this->time_from,
+            'time_to' => $this->time_to,
+            'time_from_display' => Carbon::createFromFormat('H:i:s', $this->time_from)->format('g:i A'),
+            'time_to_display' => Carbon::createFromFormat('H:i:s', $this->time_to)->format('g:i A'),
 
             // 👇 Transformed fields
 

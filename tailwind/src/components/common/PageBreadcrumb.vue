@@ -8,7 +8,7 @@
         <li>
           <router-link
             class="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
-            to="/"
+            :to="getDashboardLink()"
           >
             Utama
             <svg
@@ -42,6 +42,20 @@ import { defineProps } from 'vue'
 
 interface BreadcrumbProps {
   pageTitle: string
+}
+
+const getDashboardLink = () => {
+  const role = localStorage.getItem('authRole')
+
+  if (role === 'Peserta') {
+    return '/dashboard'
+  } else if (role === 'Penganjur') {
+    return '/dashboardPenganjur'
+  } else if (role === 'Pentadbir') {
+    return '/dashboardPentadbir'
+  } else {
+    return '/' // default fallback
+  }
 }
 
 defineProps<BreadcrumbProps>()

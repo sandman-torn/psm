@@ -19,7 +19,7 @@ const logout = async () => {
 }
 
 const menuItems = [
-  { href: '/profile', icon: UserCircleIcon, text: 'Kemaskin Profil' },
+  { href: `/profile-pentadbir/${user.value.id}/edit`, icon: UserCircleIcon, text: 'Kemaskini Profil' },
   { href: '/chat', icon: SettingsIcon, text: 'Tetapan Akaun Pengguna' },
   { href: '/profile', icon: InfoCircleIcon, text: 'Bantuan' },
 ]

@@ -7,7 +7,7 @@ export default async function authPentadbir({ next }) {
     try {
       await attempt()
     } catch (err) {
-      return next('/loginPentadbir')
+      return next('/Pentadbir')
     }
   }
 

@@ -17,7 +17,7 @@
         <img v-if="isExpanded || isHovered || isMobileOpen" class="dark:hidden mx-auto"
           src="/images/logo/ePNJevent_horizantal.png" alt="Logo" width="220" height="40" />
         <img v-if="isExpanded || isHovered || isMobileOpen" class="hidden dark:block mx-auto"
-          src="/images/logo/ePNJevent.png" alt="Logo" width="150" height="40" />
+          src="/images/logo/ePNJevent_horizantal.png" alt="Logo" width="220" height="40" />
         <img v-else src="/images/logo/ePNJevent.png" alt="Logo" width="50" height="32" />
       </router-link>
     </div>

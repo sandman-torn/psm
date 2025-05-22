@@ -34,13 +34,14 @@
       <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div class="space-y-6">
           <!-- Input: Date To -->
+
           <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
             Tarikh Mula
           </label>
-          <Datepicker
+          <input
             v-model="form.date_from"
-            format="yyyy-MM-dd"
-            class="mb-4 dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+            type="date"
+            class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
           />
           <p v-if="errors.date_from" class="mt-2 text-sm text-red-600">
             {{ errors.date_from[0] }}
@@ -50,10 +51,10 @@
           <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
             Tarikh Tamat
           </label>
-          <Datepicker
+          <input
             v-model="form.date_to"
-            format="yyyy-MM-dd"
-            class="mb-4 dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+            type="date"
+            class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
           />
         </div>
       </div>
@@ -73,6 +74,38 @@
             <p v-if="errors.unit" class="mt-2 text-sm text-red-600">{{ errors.unit[0] }}</p>
           </div> 
       </div>-->
+
+      <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div class="space-y-6">
+          <!-- Input with Placeholder -->
+
+          <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+            Masa Mula
+          </label>
+          <input
+            type="time"
+            v-model="form.time_from"
+            placeholder="Bilik Latihan 1"
+            class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+          />
+          <p v-if="errors.time_from" class="mt-2 text-sm text-red-600">{{ errors.time_from[0] }}</p>
+        </div>
+        <div class="space-y-6">
+          <!-- Input with Placeholder -->
+          <div>
+            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+              Masa Tamat
+            </label>
+            <input
+              type="time"
+              v-model="form.time_to"
+              placeholder="50"
+              class="mb-4 dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+            />
+            <p v-if="errors.time_to" class="mt-2 text-sm text-red-600">{{ errors.time_to[0] }}</p>
+          </div>
+        </div>
+      </div>
 
       <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div class="space-y-6">
@@ -173,7 +206,6 @@ import useAuth from '@/composable/useAuthPenganjur'
 const { user, authenticated, logout: logoutAction } = useAuth()
 
 const router = useRouter()
-
 const form = ref({
   created_by: '',
   by_unit: '',
@@ -183,6 +215,8 @@ const form = ref({
   date_to: undefined,
   location: '',
   url: '',
+  time_from: '',
+  time_to: '',
 })
 
 type ValidationErrors = {
@@ -201,10 +235,13 @@ const submit = async () => {
 
   try {
     await axios.get('/sanctum/csrf-cookie')
+
     const response = await axios.post('/api/programs', form.value)
+    console.log('hantar apa:', response)
+
     const programData = response.data
-      console.log('User Data:', programData)
-      console.log('Program created:', response.data)
+    console.log('User Data:', programData)
+    console.log('Program created:', response.data)
     router.push('/senarai-program')
   } catch (err: any) {
     if (err.response && err.response.status === 422) {

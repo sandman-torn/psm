@@ -40,25 +40,25 @@
                 </div>
                 <div>
                   <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                    {{ user.name }}
+                    {{ user.user.name }}
                   </span>
                   <span class="block text-gray-500 text-theme-xs dark:text-gray-400">
-                    {{ user.email }}
+                    {{ user.user.email }}
                   </span>
                 </div>
               </div>
             </td>
             <td class="px-5 py-4 sm:px-6">
-              <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ user.ic_no }}</p>
+              <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ user.user.ic_no }}</p>
             </td>
 
             <td class="px-5 py-4 sm:px-6">
               <p class="text-gray-500 text-theme-sm dark:text-gray-400">
-                {{ user.position }}
+                {{ user.user.position }}
               </p>
             </td>
             <td class="px-5 py-4 sm:px-6">
-              <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ user.department }}</p>
+              <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ user.user.department }}</p>
             </td>
             <td class="px-5 py-4 sm:px-6">
               <p class="text-gray-500 text-theme-sm dark:text-gray-400">Daftar</p>
@@ -139,7 +139,9 @@ const programId = route.params.id // this gets '16' from the URL
 const fetchUsers = async () => {
   try {
     const response = await axios.get(`/api/programs/${programId}/participants`)
-    users.value = response.data
+    users.value = response.data.filter((p) => p.is_walkin === 0)
+
+    console.log(users)
   } catch (error) {
     console.error('Failed to fetch participants:', error)
   }

@@ -25,11 +25,13 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Pengguna Sistem (Peserta)</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">15 <span class="text-sm font-normal text-blue-600">Pengguna</span></h4>
+          <span class="text-sm text-gray-500 dark:text-gray-400"
+            >Jumlah Pengguna Sistem (Peserta)</span
+          >
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
+            {{ counts.peserta }} <span class="text-sm font-normal text-blue-600">Pengguna</span>
+          </h4>
         </div>
-
-
       </div>
     </div>
 
@@ -58,11 +60,13 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Pengguna Sistem (Penganjur)</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">30 <span class="text-sm font-normal text-blue-600">Pengguna</span></h4>
+          <span class="text-sm text-gray-500 dark:text-gray-400"
+            >Jumlah Pengguna Sistem (Penganjur)</span
+          >
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
+            {{ counts.penganjur }} <span class="text-sm font-normal text-blue-600">Pengguna</span>
+          </h4>
         </div>
-
-        
       </div>
     </div>
 
@@ -91,12 +95,35 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Pengguna Sistem (Pentadbir Sistem)</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">15 <span class="text-sm font-normal text-blue-600">Pengguna</span></h4>
+          <span class="text-sm text-gray-500 dark:text-gray-400"
+            >Jumlah Pengguna Sistem (Pentadbir Sistem)</span
+          >
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
+            {{ counts.pentadbir }} <span class="text-sm font-normal text-blue-600">Pengguna</span>
+          </h4>
         </div>
-
-        
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+const counts = ref({
+  peserta: 0,
+  penganjur: 0,
+  pentadbir: 0,
+})
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/user-counts')
+    counts.value = response.data
+    console.log('user count:', response)
+    } catch (error) {
+    console.error('Error fetching user counts:', error)
+  }
+})
+</script>

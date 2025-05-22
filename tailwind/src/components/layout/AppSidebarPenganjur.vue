@@ -26,9 +26,9 @@
         <img
           v-if="isExpanded || isHovered || isMobileOpen"
           class="hidden dark:block mx-auto"
-          src="/images/logo/ePNJevent.png"
+          src="/images/logo/ePNJevent_horizantal.png"
           alt="Logo"
-          width="150"
+          width="220"
           height="40"
         />
         <img v-else src="/images/logo/ePNJevent.png" alt="Logo" width="50" height="32" />
@@ -229,6 +229,37 @@ const menuGroups = [
         subItems: [
           { name: 'Senarai Program', path: '/senarai-program', pro: false },
           { name: 'Kalendar Program', path: '/calendar', pro: false },
+        ],
+        roles: ['Penganjur'],
+      },
+      
+      {
+        icon: PlugInIcon,
+        name: 'Pengurusan Peserta',
+        //path: "/calendar",
+        subItems: [
+          { name: 'Pendaftaran Kehadiran Peserta', path: '/senarai-program-kehadiran', pro: false },
+          //{ name: 'Kalendar Program', path: '/calendar', pro: false },
+        ],
+        roles: ['Penganjur'],
+      },
+
+      {
+        icon: CalenderIcon,
+        name: 'Pengurusan Sijil',
+        //path: "/calendar",
+        subItems: [
+          { name: 'Senarai Program Sijil', path: '/senarai-program-sijil', pro: false },
+        ],
+        roles: ['Penganjur'],
+      },
+      {
+        icon: PlugInIcon,
+        name: 'Pengurusan Bahan',
+        //path: "/calendar",
+        subItems: [
+          { name: 'Muat Naik Bahan Program', path: '/senarai-program-muat-naik-bahan', pro: false },
+          //{ name: 'Kalendar Program', path: '/calendar', pro: false },
         ],
         roles: ['Penganjur'],
       },
